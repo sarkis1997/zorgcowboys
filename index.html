@@ -20,13 +20,12 @@
         window.readFile = readFile;
     </script>
 
-    <div class="form-inline">
+    <div class="form form-inline">
             <div class="form-group">
-                <label for="files">Upload a CSV dataset</label>
-                <input type="file" id="files" accept=".csv" class="form-control">
-            </div>
-            <div class="form-group">
-                <button id="submit" onclick="readFile()" class="btn btn-primary">submit</button>
+                <form action="" method="post">
+                    <label for="files">Upload a CSV dataset</label>
+                    <input type="file" id="files" accept=".csv" class="form-control">
+                </form>
             </div>
     </div>
 
