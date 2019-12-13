@@ -1,3 +1,4 @@
 export function readFile() {
-	console.log('clicked')
-}
+	console.log('clicked');
+};
+
