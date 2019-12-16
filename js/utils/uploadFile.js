@@ -27,10 +27,10 @@ export function readFile() {
 		};
 		reader.readAsText(input.files[0])
 
+		console.log(result)
 
 	}, false);
 
-	console.log(result)
 
 
 }
