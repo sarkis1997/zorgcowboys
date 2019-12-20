@@ -1,0 +1,32 @@
+.toggleSwitchOn, .toggleSwitchOff  {
+    background-color: #dfd8f1 !important;
+    color: #8567e4;
+}
+.toggleSwitchOn:hover, .toggleSwitchOff:hover {
+    color: #8567e4;
+}
+
+.toggle.btn-outline-primary .toggle-handle, .toggle.btn-outline-secondary .toggle-handle {
+    background-color: #8567e4 !important;
+}
+
+.btn-outline-primary, .toggle.btn-outline-primary .toggle-handle {
+    border-color: #8567e4 !important;
+}
+
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+    border-radius: 20em;
+    width: 20em !important;
+}
+.toggle.ios .toggle-handle {
+    border-radius: 20em;
+}
+
+.toggle-off.btn {
+    padding-left: inherit !important;
+
+}
+
+.toggle-on.btn {
+    padding-right: inherit !important;
+}

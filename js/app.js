@@ -1,8 +1,8 @@
 import { readFile } from "./utils/uploadFile.js";
-import { createMap } from "./utils/createMap.js";
+import { scatterPlot } from "./utils/createScatterPlot.js";
 
 function startApp() {
-	createMap();
+	scatterPlot();
 	readFile();
 	console.log('app started')
 }

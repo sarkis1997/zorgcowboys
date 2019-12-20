@@ -29,8 +29,8 @@ export function readFile() {
 
 		console.log(result)
 
+		document.getElementById('uploadFile').style.display = 'none';
+		document.getElementById('framework').style.display = 'block';
+
 	}, false);
-
-
-
 }
