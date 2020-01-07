@@ -11,12 +11,12 @@ export function readFile() {
 			reader.onload = async function () {
 
 				const lines = reader.result.split("\n");
-				var headers = lines[0].replace(/"/g,'').split(",");
-					for(var i=1;i<lines.length;i++){
-						var obj = {};
-						var currentline=lines[i].replace(/"/g,'').split(",");
+				let headers = lines[0].replace(/"/g,'').split(",");
+					for(let i=1;i<lines.length;i++){
+						let obj = {};
+						let currentline=lines[i].replace(/"/g,'').split(",");
 
-						for(var j=0;j<headers.length;j++){
+						for(let j=0;j<headers.length;j++){
 							obj[headers[j]] = currentline[j];
 						}
 						result.push(obj);
