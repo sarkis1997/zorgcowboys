@@ -1,11 +1,9 @@
-import { readFile } from "./utils/uploadFile.js";
 import { scatterPlot } from "./utils/createScatterPlot.js";
+import { readFile } from "./utils/uploadFile.js";
 
-function startApp() {
-	scatterPlot();
-	readFile();
-	console.log('app started')
+readFile();
+
+export function startApp(data) {
+	scatterPlot(data);
 }
 
-
-startApp();

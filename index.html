@@ -18,6 +18,7 @@
 </head>
 
 <body>
+
     <script type="module"> import "./js/app.js" </script>
     <script type="module">
         import { readFile } from "./js/utils/uploadFile.js";
@@ -29,15 +30,15 @@
     </div>
 
     <div id="framework">
-        <div>
+        <div class="titleSection">
             <h3>Winstpercentage zorgbedrijven in</h3>
-            <select name="" id="">
+            <select name="" id="selectYear">
                 <option value="2015">2015</option>
                 <option value="2016">2016</option>
                 <option value="2017">2017</option>
             </select>
         </div>
-        <div>
+        <div class="filterSection">
 <!--            https://gitbrent.github.io/bootstrap4-toggle/               -->
             <input type="checkbox"
                    checked data-toggle="toggle"
@@ -46,7 +47,10 @@
                    data-style="ios"
                    data-onstyle="outline-primary toggleSwitchOn"
                    data-offstyle="outline-secondary toggleSwitchOff">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+            <div class="searchContainer">
+                <img class="searchIcon" src="./media/searchicon.svg" alt="">
+                <input type="text" id="searchInput" onkeyup="myFunction()" placeholder="Zoek een zorginstelling">
+            </div>
         </div>
     </div>
 
