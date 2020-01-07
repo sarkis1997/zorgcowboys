@@ -1,19 +1,27 @@
 export async function scatterPlot(data) {
-
 	const body = d3.select('#map-holder');
-
 	let margin = {top: 50, right: 50, bottom: 50, left: 50};
-	let width = document.body.clientWidth;
-	let height = document.body.clientHeight;
 
+	function myResponsiveComponent(container, props) {
+		const svg = container.append('svg')
+		svg
+			.attr('width', props.width)
+			.attr('height', props.height)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	}
 
-	let svg = body.selectAll('svg').data([null]);
-	svg = svg.enter().append('svg')
-		.merge(svg)
-		.attr('width', width + margin.left + margin.right)
-		.attr('height', height)
-		.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	myResponsiveComponent(body, {
+		width: document.body.clientWidth,
+		height: document.body.clientHeight,
+	});
+
+	window.addEventListener('resize', () => {
+		console.log('resized')
+	});
+
+	let width = innerWidth - margin.left - margin.right;
+	let height = innerHeight - margin.top - margin.bottom;
 
 	const xScale = d3.scaleLinear()
 		.domain(d3.extent(data.map(item => {
