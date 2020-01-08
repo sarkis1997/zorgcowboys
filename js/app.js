@@ -1,10 +1,11 @@
 import { scatterPlot } from "./utils/createScatterPlot.js";
 
-async function loadData() {
-	let data = await d3.csv("datasets/dataset.csv")
-	startApp(data)
-}
-loadData();
+
+d3.json("datasets/dataset.json")
+	.then(function(data) {
+		startApp(data)
+	});
+
 
 export function startApp(data) {
 	scatterPlot(data);
