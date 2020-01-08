@@ -1,4 +1,5 @@
-export function scatterPlot() {
+export function scatterPlot(data) {
+	console.log(data)
 	const body = d3.select('#map-holder');
 	let margin = {top: 50, right: 50, bottom: 50, left: 50};
 	let width = innerWidth - margin.left - margin.right;
@@ -18,15 +19,15 @@ export function scatterPlot() {
 			.merge(group);
 
 		const xScale = d3.scaleLinear()
-			.domain(d3.extent(data.map(item => {
-				if (isNaN(item.omzet)) {
-					item.omzet = 0;
-				}
-				else (
-					parseInt(item.omzet)
-				);
-				return item.omzet;
-			})))
+			// .domain(d3.extent(data.map(item => {
+			// 	if (isNaN(item.omzet)) {
+			// 		item.omzet = 0;
+			// 	}
+			// 	else (
+			// 		parseInt(item.omzet)
+			// 	);
+			// 	return item.omzet;
+			// })))
 			.range([0, width]);
 		const xAxis = d3.axisBottom(xScale)
 			.ticks(width / 70);

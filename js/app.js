@@ -1,8 +1,10 @@
 import { scatterPlot } from "./utils/createScatterPlot.js";
 
-d3.csv("dataset.csv", function (data) {
+async function loadData() {
+	let data = await d3.csv("datasets/dataset.csv")
 	startApp(data)
-});
+}
+loadData();
 
 export function startApp(data) {
 	scatterPlot(data);
