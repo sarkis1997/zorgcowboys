@@ -33,3 +33,9 @@ body {
 .filterSection > div {
     margin: 0 1em;
 }
+
+#map-holder > svg {
+    padding: 3em 1em 1em 1em;
+    overflow: visible;
+}
+
