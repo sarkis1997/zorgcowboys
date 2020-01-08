@@ -1,4 +1,4 @@
-export async function scatterPlot(data) {
+export function scatterPlot() {
 	const body = d3.select('#map-holder');
 	let margin = {top: 50, right: 50, bottom: 50, left: 50};
 	let width = innerWidth - margin.left - margin.right;
@@ -61,7 +61,6 @@ export async function scatterPlot(data) {
 	window.addEventListener('resize', render);
 
 
-	//hieronder is nog de oude code.
 
 }
 

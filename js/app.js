@@ -1,7 +1,8 @@
 import { scatterPlot } from "./utils/createScatterPlot.js";
-import { readFile } from "./utils/uploadFile.js";
 
-readFile();
+d3.csv("dataset.csv", function (data) {
+	startApp(data)
+});
 
 export function startApp(data) {
 	scatterPlot(data);
