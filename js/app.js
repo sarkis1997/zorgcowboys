@@ -31,7 +31,7 @@ d3.json("datasets/dataset.json")
 					break;
 			}
 		});
-		return { j2011, j2012, j2013, j2014, j2015, j2016, j2017, j2018}
+		return { j2011, j2012, j2013, j2014, j2015, j2016, j2017, j2018 }
 	})
 	.then(function(data) {
 		startApp(data)
