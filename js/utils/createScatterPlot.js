@@ -1,7 +1,6 @@
 import { checkYearInput } from "./checkSelectedYear.js";
 import { createD3RangeSlider } from "../modules/d3RangeSlider.js";
 
-
 export function scatterPlot(data) {
 	createScatterPlot(data.j2018);
 	d3.select('#selectYear').on("change", function () {
@@ -9,36 +8,31 @@ export function scatterPlot(data) {
 		while (pNode.firstChild) { pNode.removeChild(pNode.firstChild);}
 		let rangeField = document.getElementById('slider-container');
 		while (rangeField.firstChild) { rangeField.removeChild(rangeField.firstChild);}
-
-
 		let inputData = checkYearInput(data);
 		createScatterPlot(inputData);
 	});
 }
 
 function createScatterPlot(dataset) {
-	console.log(dataset)
 
 	let margin = {top: 20, right: 50, bottom: 30, left: 50};
 	let width = innerWidth - margin.left - margin.right;
 	let height = 100;
 
-	// Append SVG
 	let svg = d3.select('#viz-holder')
 		.append('svg')
 		.attr('width', width)
 		.attr('height', height);
 
-	// Create scale
 	let scale = d3.scaleLinear()
 		.domain(d3.extent(dataset, d => { if(isNaN(d.omzet)){d.omzet=0} return d.omzet }))
 		.range([0 + 30, width * .96]);
 
 	let xAxis = d3.axisBottom()
-		.scale(scale)
+		.scale(scale);
 
-	//Append group and insert axis
 	svg.append("g")
+		.attr('class', 'test')
 		.call(xAxis);
 
 	let min = d3.min(dataset, d => { if(isNaN(d.omzet) || d.omzet < 0){d.omzet=0} return d.omzet });
@@ -60,6 +54,20 @@ function createScatterPlot(dataset) {
 		let newRangeEnd = Number(newRange.end).toLocaleString();
 
 		rangeLabel.text("€ " + newRangeBegin + " - " + "€ " + newRangeEnd);
+
+		let scale = d3.scaleLinear()
+			.domain([newRange.begin, newRange.end])
+			.range([0 + 30, width * .96]);
+
+		let xAxis = d3.axisBottom()
+			.scale(scale);
+
+		d3.select('.test')
+			.call(xAxis);
+
+		console.log(newRange.begin);
+		console.log(newRange.end);
+
 	});
 
 	svg.selectAll(".circle")
