@@ -15,9 +15,9 @@ export function scatterPlot(data) {
 
 function createScatterPlot(dataset) {
 
-	let margin = {top: 20, right: 50, bottom: 30, left: 50};
+	let margin = {right: 150, left: 200};
 	let width = innerWidth - margin.left - margin.right;
-	let height = 100;
+	let height = 600;
 
 	let svg = d3.select('#viz-holder')
 		.append('svg')
@@ -53,6 +53,7 @@ function createScatterPlot(dataset) {
 		let newRangeBegin = Number(newRange.begin).toLocaleString();
 		let newRangeEnd = Number(newRange.end).toLocaleString();
 
+		rangeLabel.append('input');
 		rangeLabel.text("€ " + newRangeBegin + " - " + "€ " + newRangeEnd);
 
 		let scale = d3.scaleLinear()
@@ -65,18 +66,63 @@ function createScatterPlot(dataset) {
 		d3.select('.test')
 			.call(xAxis);
 
-		console.log(newRange.begin);
-		console.log(newRange.end);
-
+		circles
+			.exit().remove()
+			.enter().append("circle")
+			.merge(circles)
+			.attr("class", "circle")
+			.attr("cx", function(d) { return scale(d.omzet); })
+			.attr("cy", 30)
+			.attr('r', function ( d ) {
+				return radiusScale(d.winst);
+			})
+			.attr("fill", function (d) {
+				if ( (100 * d.winst / d.omzet) < 0 ) {
+					return '#dcdcdc'
+				} else if ( (100 * d.winst / d.omzet) >= 0 && (100 * d.winst / d.omzet) < 10 ) {
+					return '#71e9b3'
+				} else {
+					return '#e5604e'
+				}
+			});
+		counter
+			.text(function () {
+				return dataset.length;
+			})
 	});
 
-	svg.selectAll(".circle")
+
+	let radiusScale = d3.scaleLinear()
+		.domain( [
+			d3.min(dataset, function ( d ) { return d.winst}),
+			d3.max( dataset, function ( d ) { return d.winst })
+		] )
+		// hier pas je de grootte van de bolletjes aan
+		.range( [ 1, 30] );
+
+	let circles = svg.selectAll(".circle")
 		.data(dataset)
 		.enter()
 		.append("circle")
+		.attr("class", "circle")
 		.attr("cx", function(d) { return scale(d.omzet); })
 		.attr("cy", 30)
-		.attr("r", 5)
-		.attr("fill", "green");
+		.attr('r', function ( d ) {
+			return radiusScale(d.winst);
+		})
+		.attr("fill", function (d) {
+			if ( (100 * d.winst / d.omzet) < 0 ) {
+				return '#dcdcdc'
+			} else if ( (100 * d.winst / d.omzet) >= 0 && (100 * d.winst / d.omzet) < 10 ) {
+				return '#71e9b3'
+			} else {
+				return '#e5604e'
+			}
+		});
+
+	let counter = d3.select('.amountContainer')
+		.text(function () {
+			return dataset.length;
+		});
 
 }

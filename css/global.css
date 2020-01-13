@@ -20,6 +20,16 @@ body {
 
 #app {
     margin-top: 2em;
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+#slideFilter {
+    grid-column: 2;
+}
+
+#countZorgBedrijven {
+    text-align: center;
 }
 
 path {
@@ -67,8 +77,8 @@ path {
     position: relative;
     height:30px;
     background-color: #eeeef5;
-    width: 80%;
     margin: 0 auto;
+    width: 67%;
 }
 
 #range-label {
