@@ -17,6 +17,7 @@ export function scatterPlot(data) {
 }
 
 function createScatterPlot(dataset) {
+	console.log(dataset)
 
 	let margin = {top: 20, right: 50, bottom: 30, left: 50};
 	let width = innerWidth - margin.left - margin.right;
@@ -51,7 +52,7 @@ function createScatterPlot(dataset) {
 	let newRangeEnd = Number(newRange.end).toLocaleString();
 
 	rangeLabel.text("€ " + newRangeBegin + " - " + "€ " + newRangeEnd);
-
+git
 	slider.onChange(function () {
 		let newRange = slider.range();
 
@@ -60,5 +61,14 @@ function createScatterPlot(dataset) {
 
 		rangeLabel.text("€ " + newRangeBegin + " - " + "€ " + newRangeEnd);
 	});
+
+	svg.selectAll(".circle")
+		.data(dataset)
+		.enter()
+		.append("circle")
+		.attr("cx", function(d) { return scale(d.omzet); })
+		.attr("cy", 30)
+		.attr("r", 5)
+		.attr("fill", "green");
 
 }
