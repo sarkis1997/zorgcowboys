@@ -14,14 +14,38 @@ body {
     margin: 0;
 }
 
+#framework {
+    margin-top: 2em;
+}
 
+#app {
+    margin-top: 2em;
+}
+
+path {
+    color: transparent;
+}
+
+#viz-holder svg {
+    display: block;
+    margin: 0 auto;
+}
 .titleSection {
     display: flex;
     justify-content: center;
 }
+.titleSection h3 {
+    font-weight: 700;
+    margin: 0;
+}
 
 #selectYear {
-    margin-left: 1em;
+    margin-left: 0.1em;
+    background: none;
+    border: none;
+    color: #7f6ddd;
+    font-weight: 700;
+    font-size: 1.7em;
 }
 
 .filterSection {
