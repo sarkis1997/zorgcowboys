@@ -52,7 +52,7 @@ function createScatterPlot(dataset) {
 	let newRangeEnd = Number(newRange.end).toLocaleString();
 
 	rangeLabel.text("€ " + newRangeBegin + " - " + "€ " + newRangeEnd);
-git
+
 	slider.onChange(function () {
 		let newRange = slider.range();
 
