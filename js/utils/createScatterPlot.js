@@ -1,4 +1,6 @@
 import { checkYearInput } from "./checkSelectedYear.js";
+import { createD3RangeSlider } from "../modules/d3RangeSlider.js";
+
 
 export function scatterPlot(data) {
 	createScatterPlot(data.j2018);
@@ -29,5 +31,22 @@ function createScatterPlot(dataset) {
 	//Append group and insert axis
 	svg.append("g")
 		.call(xAxis);
+
+
+	let min = d3.min(dataset, d => { if(isNaN(d.omzet) || d.omzet < 0){d.omzet=0} return d.omzet });
+	let max = d3.max(dataset, d => { if(isNaN(d.omzet) || d.omzet < 0){d.omzet=0} return d.omzet });
+
+	var slider = createD3RangeSlider(min, max, "#slider-container");
+	var newRange = slider.range(min, max);
+
+
+	let rangeLabel = d3.select("#range-label");
+
+	rangeLabel.text(newRange.begin + " - " + newRange.end);
+
+	slider.onChange(function () {
+		var newRange = slider.range();
+		rangeLabel.text(newRange.begin + " - " + newRange.end);
+	})
 
 }

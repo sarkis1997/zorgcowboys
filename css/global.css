@@ -39,3 +39,14 @@ body {
     overflow: visible;
 }
 
+#slider-container {
+    position: relative;
+    height:30px;
+    background-color: #eeeef5;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#range-label {
+    text-align: center;
+}
