@@ -25,7 +25,7 @@ function createScatterPlot(dataset) {
 		.attr('height', height);
 
 	let scale = d3.scaleLinear()
-		.domain(d3.extent(dataset, d => { if(isNaN(d.omzet)){d.omzet=0} return d.omzet }))
+		.domain(d3.extent(dataset, d => { return d.omzet }))
 		.range([0 + 30, width * .96]);
 
 	let xAxis = d3.axisBottom()
@@ -35,8 +35,8 @@ function createScatterPlot(dataset) {
 		.attr('class', 'test')
 		.call(xAxis);
 
-	let min = d3.min(dataset, d => { if(isNaN(d.omzet) || d.omzet < 0){d.omzet=0} return d.omzet });
-	let max = d3.max(dataset, d => { if(isNaN(d.omzet) || d.omzet < 0){d.omzet=0} return d.omzet });
+	let min = d3.min(dataset, d => { if(d.omzet < 0){d.omzet=0} return d.omzet });
+	let max = d3.max(dataset, d => { if(d.omzet < 0){d.omzet=0} return d.omzet });
 
 	var slider = createD3RangeSlider(min, max, "#slider-container");
 	var newRange = slider.range(min, max);
@@ -84,7 +84,10 @@ function createScatterPlot(dataset) {
 				} else {
 					return '#e5604e'
 				}
-			});
+			})
+			.on("mouseover", handleMouseOver)
+			.on("mouseout", handleMouseOut);
+
 		counter
 			.text(function () {
 				return dataset.length;
@@ -118,11 +121,37 @@ function createScatterPlot(dataset) {
 			} else {
 				return '#e5604e'
 			}
-		});
+		})
+		// .on("mouseover", handleMouseOver)
+		// .on("mouseout", handleMouseOut)
+		.on("click", handleClick);
 
 	let counter = d3.select('.amountContainer')
 		.text(function () {
 			return dataset.length;
 		});
+
+	document.getElementById('searchInput').addEventListener('input', searchFunction);
+	function searchFunction(e) {
+		console.log(e.target.value)
+	}
+
+	function handleClick() {
+
+		let sb = document.getElementById("sidebar");
+		if (sb.style.width == 0 || sb.style.width == "0px" ) {
+			sb.style.width = "400px";
+		} else {
+			sb.style.width = "0";
+		}
+	}
+
+	// function handleMouseOver() {
+	// 	document.getElementById('sidebar').style.width = "250px";
+	// }
+	//
+	// function handleMouseOut() {
+	// 	document.getElementById('sidebar').style.width = "0px";
+	// }
 
 }
