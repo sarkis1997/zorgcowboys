@@ -85,8 +85,6 @@ function createScatterPlot(dataset) {
 					return '#e5604e'
 				}
 			})
-			.on("mouseover", handleMouseOver)
-			.on("mouseout", handleMouseOut);
 
 		counter
 			.text(function () {
@@ -140,7 +138,7 @@ function createScatterPlot(dataset) {
 
 		let sb = document.getElementById("sidebar");
 		if (sb.style.width == 0 || sb.style.width == "0px" ) {
-			sb.style.width = "400px";
+			sb.style.width = "450px";
 		} else {
 			sb.style.width = "0";
 		}
