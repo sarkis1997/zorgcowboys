@@ -120,9 +120,7 @@ function createScatterPlot(dataset) {
 				return '#e5604e'
 			}
 		})
-		// .on("mouseover", handleMouseOver)
-		// .on("mouseout", handleMouseOut)
-		.on("click", handleClick);
+		.on("click", function(d) { handleClick(d) });
 
 	let counter = d3.select('.amountContainer')
 		.text(function () {
@@ -134,7 +132,8 @@ function createScatterPlot(dataset) {
 		console.log(e.target.value)
 	}
 
-	function handleClick() {
+	function handleClick(d) {
+		console.log(d)
 
 		let sb = document.getElementById("sidebar");
 		if (sb.style.width == 0 || sb.style.width == "0px" ) {
