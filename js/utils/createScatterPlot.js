@@ -137,7 +137,7 @@ function createScatterPlot(dataset) {
 				.style("background", "red");
 		})
 		.on("mouseout", function(d) {
-			tooltip.transitiogit adn()
+			tooltip.transition()
 				.duration(500)
 				.style("opacity", 0);
 		});
