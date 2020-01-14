@@ -84,3 +84,7 @@ path {
 #range-label {
     text-align: center;
 }
+
+.tooltip {
+    cursor: pointer;
+}

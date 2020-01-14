@@ -35,6 +35,10 @@ function createScatterPlot(dataset) {
 		.attr('class', 'test')
 		.call(xAxis);
 
+	let tooltip = d3.select("body").append("div")
+		.attr("class", "tooltip")
+		.style("opacity", 0);
+
 	let min = d3.min(dataset, d => { if(d.omzet < 0){d.omzet=0} return d.omzet });
 	let max = d3.max(dataset, d => { if(d.omzet < 0){d.omzet=0} return d.omzet });
 
@@ -84,7 +88,7 @@ function createScatterPlot(dataset) {
 				} else {
 					return '#e5604e'
 				}
-			})
+			});
 
 		counter
 			.text(function () {
@@ -120,7 +124,23 @@ function createScatterPlot(dataset) {
 				return '#e5604e'
 			}
 		})
-		.on("click", function(d) { handleClick(d) });
+		.on("click", function(d) { handleClick(d) })
+		.on("mouseover", function(d) {
+			tooltip
+				.transition()
+				.duration(200)
+				.style("opacity", .9);
+			tooltip
+				.html(d.winst + "<br/>"  + d.omzet)
+				.style("left", (d3.event.pageX) + "px")
+				.style("top", (d3.event.pageY - 30) + "px")
+				.style("background", "red");
+		})
+		.on("mouseout", function(d) {
+			tooltip.transitiogit adn()
+				.duration(500)
+				.style("opacity", 0);
+		});
 
 	let counter = d3.select('.amountContainer')
 		.text(function () {
