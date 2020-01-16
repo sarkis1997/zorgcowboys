@@ -15,6 +15,7 @@ export function scatterPlot(data) {
 
 function createScatterPlot(dataset) {
 
+	document.getElementById('searchInput').addEventListener('input', searchFunction);
 	let margin = {right: 150, left: 200};
 	let width = innerWidth - margin.left - margin.right;
 	let height = 600;
@@ -125,36 +126,34 @@ function createScatterPlot(dataset) {
 			}
 		})
 		.on("click", function(d) { handleClick(d) })
-		.on("mouseover", function(d) {
-			tooltip
-				.transition()
-				.duration(200)
-				.style("opacity", .9);
-			tooltip
-				.html(d.winst + "<br/>"  + d.omzet)
-				.style("left", (d3.event.pageX) + "px")
-				.style("top", (d3.event.pageY - 30) + "px")
-				.style("background", "red");
-		})
-		.on("mouseout", function(d) {
-			tooltip.transition()
-				.duration(500)
-				.style("opacity", 0);
-		});
+		.on("mouseover", function(d) { handleMouseOver(d) })
+		.on("mouseout", function(d) { handleMouseOut(d) });
 
 	let counter = d3.select('.amountContainer')
 		.text(function () {
 			return dataset.length;
 		});
 
-	document.getElementById('searchInput').addEventListener('input', searchFunction);
 	function searchFunction(e) {
-		console.log(e.target.value)
+		let filterNodes = dataset.filter(zorgbedrijf => zorgbedrijf.bedrijfsnaam.toLowerCase().includes(e.target.value.toLowerCase()));
+		console.log(filterNodes);
+
+		circles.attr("opacity", function (d) {
+			if (filterNodes.includes(d) ) {
+				return 1
+			} else {
+				return 0.2
+			}
+		})
+		// filterNodes.forEach(item => {
+		// 	if(dataset.values(item)) {
+		// 		console.log(item)
+		// 		// item.attr("opacity", 0)
+		// 	}
+		// })
 	}
 
 	function handleClick(d) {
-		console.log(d)
-
 		let sb = document.getElementById("sidebar");
 		if (sb.style.width == 0 || sb.style.width == "0px" ) {
 			sb.style.width = "450px";
@@ -163,12 +162,27 @@ function createScatterPlot(dataset) {
 		}
 	}
 
-	// function handleMouseOver() {
-	// 	document.getElementById('sidebar').style.width = "250px";
-	// }
-	//
-	// function handleMouseOut() {
-	// 	document.getElementById('sidebar').style.width = "0px";
-	// }
+	function handleMouseOver(d) {
+		console.log(d.bedrijfsnaam)
+		tooltip
+			.transition()
+			.duration(200)
+			.style("opacity", .9);
+		tooltip
+			.html(d.winst + "<br/>"  + d.omzet)
+			.style("left", (d3.event.pageX) + "px")
+			.style("top", (d3.event.pageY - 30) + "px")
+			.style("background", "red");
+	}
+
+	function handleMouseOut(d) {
+		tooltip.transition()
+			.duration(500)
+			.style("opacity", 0);
+	}
+
+	function checkSearch() {
+
+	}
 
 }
