@@ -36,9 +36,7 @@ function createScatterPlot(dataset) {
 		.attr('class', 'test')
 		.call(xAxis);
 
-	let tooltip = d3.select("body").append("div")
-		.attr("class", "tooltip")
-		.style("opacity", 0);
+	let tooltip = d3.select(".tooltip");
 
 	let min = d3.min(dataset, d => { if(d.omzet < 0){d.omzet=0} return d.omzet });
 	let max = d3.max(dataset, d => { if(d.omzet < 0){d.omzet=0} return d.omzet });
@@ -118,11 +116,11 @@ function createScatterPlot(dataset) {
 		})
 		.attr("fill", function (d) {
 			if ( (100 * d.winst / d.omzet) < 0 ) {
-				return '#dcdcdc'
+				return '##E8E8E8'
 			} else if ( (100 * d.winst / d.omzet) >= 0 && (100 * d.winst / d.omzet) < 10 ) {
-				return '#71e9b3'
+				return '#24EDAD'
 			} else {
-				return '#e5604e'
+				return '#F65545'
 			}
 		})
 		.on("click", function(d) { handleClick(d) })
@@ -136,8 +134,6 @@ function createScatterPlot(dataset) {
 
 	function searchFunction(e) {
 		let filterNodes = dataset.filter(zorgbedrijf => zorgbedrijf.bedrijfsnaam.toLowerCase().includes(e.target.value.toLowerCase()));
-		console.log(filterNodes);
-
 		circles.attr("opacity", function (d) {
 			if (filterNodes.includes(d) ) {
 				return 1
@@ -145,12 +141,6 @@ function createScatterPlot(dataset) {
 				return 0.2
 			}
 		})
-		// filterNodes.forEach(item => {
-		// 	if(dataset.values(item)) {
-		// 		console.log(item)
-		// 		// item.attr("opacity", 0)
-		// 	}
-		// })
 	}
 
 	function handleClick(d) {
@@ -167,18 +157,20 @@ function createScatterPlot(dataset) {
 		tooltip
 			.transition()
 			.duration(200)
-			.style("opacity", .9);
-		tooltip
-			.html(d.winst + "<br/>"  + d.omzet)
-			.style("left", (d3.event.pageX) + "px")
-			.style("top", (d3.event.pageY - 30) + "px")
-			.style("background", "red");
+			.style("opacity", 1)
+			.style("left", (d3.event.pageX - 50) + "px")
+			.style("top", (d3.event.pageY - 90) + "px");
+
+		d3.select('.ttNaam').html(d.bedrijfsnaam)
+		d3.select('.ttWinst').html('<span>winst:</span>' + '<span>' + d.winst + '</span>')
+		d3.select('.ttOmzet').html('<span>omzet:</span>' + '<span>' + d.omzet + '</span>')
+		d3.select('.ttPercentage').html('<span>winstpercentage:</span>' + '<span>' + d.omzet + '</span>')
 	}
 
 	function handleMouseOut(d) {
 		tooltip.transition()
-			.duration(500)
-			.style("opacity", 0);
+			.duration(200)
+			// .style("opacity", 0);
 	}
 
 	function checkSearch() {
