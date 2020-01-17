@@ -141,9 +141,24 @@ function createScatterPlot(dataset) {
 		circles.attr("opacity", function (d) { if (!filterNodes.includes(d)) {return 0} })
 	}
 
-	function filterLess10() { circles.attr("display", function (d) { if (!(d.perc_winst < 10)) { return 'none'}}) }
-	function filterOver10() { circles.attr("display", function (d) { if (!(d.perc_winst >= 10)) { return 'none'}}) }
-	function filterNegative() { circles.attr("display", function (d) { if (!(d.perc_winst < 0)) { return 'none'}}) }
+	function filterLess10() {
+		circles.attr("display", function (d) { if (!(d.perc_winst < 10)) { return 'none'}});
+		document.querySelector('.filterOver10').style.border = '0px';
+		document.querySelector('.filterNegative').style.border = '0px';
+		document.querySelector('.filterUnder10').style.border = '2px solid #7f6ddd'
+	}
+	function filterOver10() {
+		circles.attr("display", function (d) { if (!(d.perc_winst >= 10)) { return 'none'}});
+		document.querySelector('.filterUnder10').style.border = '0px';
+		document.querySelector('.filterNegative').style.border = '0px';
+		document.querySelector('.filterOver10').style.border = '2px solid #7f6ddd'
+	}
+	function filterNegative() {
+		circles.attr("display", function (d) { if (!(d.perc_winst < 0)) { return 'none'}});
+		document.querySelector('.filterOver10').style.border = '0px';
+		document.querySelector('.filterOver10').style.border = '0px';
+		document.querySelector('.filterNegative').style.border = '2px solid #7f6ddd'
+	}
 
 
 	function handleClick(d) {
@@ -156,7 +171,6 @@ function createScatterPlot(dataset) {
 	}
 
 	function handleMouseOver(d) {
-		console.log(d.bedrijfsnaam)
 		tooltip
 			.transition()
 			.duration(200)

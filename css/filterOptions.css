@@ -1,0 +1,39 @@
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 500px;
+    margin: auto;
+}
+
+.circleRed {
+    background-color: #f65645;
+}
+.circleGreen {
+    background-color: #24edad;
+}
+.circleGrey {
+    background-color: #e8e8e8;
+}
+.filterOpt {
+    padding: 0.3em 0.5em;
+}
+.filterOptText {
+    color: #707070;
+    font-weight: 500;
+    font-size: 0.9em;
+    margin: auto;
+    padding-left: 0.5em;
+    text-decoration: underline;
+}
+.filterOptions {
+    justify-content: space-around;
+    grid-column: 2;
+    display: flex;
+    width: 80%;
+    margin: auto;
+    margin-top: 1em;
+}
+.filterOptions > div {
+    display: flex;
+    cursor: pointer;
+}
