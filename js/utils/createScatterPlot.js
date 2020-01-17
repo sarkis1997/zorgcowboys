@@ -16,6 +16,10 @@ export function scatterPlot(data) {
 function createScatterPlot(dataset) {
 
 	document.getElementById('searchInput').addEventListener('input', searchFunction);
+	document.querySelector('.filterUnder10').addEventListener('click', filterLess10);
+	document.querySelector('.filterOver10').addEventListener('click', filterOver10);
+	document.querySelector('.filterNegative').addEventListener('click', filterNegative);
+
 	let margin = {right: 150, left: 200};
 	let width = innerWidth - margin.left - margin.right;
 	let height = 600;
@@ -134,14 +138,13 @@ function createScatterPlot(dataset) {
 
 	function searchFunction(e) {
 		let filterNodes = dataset.filter(zorgbedrijf => zorgbedrijf.bedrijfsnaam.toLowerCase().includes(e.target.value.toLowerCase()));
-		circles.attr("opacity", function (d) {
-			if (filterNodes.includes(d) ) {
-				return 1
-			} else {
-				return 0
-			}
-		})
+		circles.attr("opacity", function (d) { if (!filterNodes.includes(d)) {return 0} })
 	}
+
+	function filterLess10() { circles.attr("display", function (d) { if (!(d.perc_winst < 10)) { return 'none'}}) }
+	function filterOver10() { circles.attr("display", function (d) { if (!(d.perc_winst >= 10)) { return 'none'}}) }
+	function filterNegative() { circles.attr("display", function (d) { if (!(d.perc_winst < 0)) { return 'none'}}) }
+
 
 	function handleClick(d) {
 		let sb = document.getElementById("sidebar");
@@ -162,19 +165,15 @@ function createScatterPlot(dataset) {
 			.style("top", (d3.event.pageY -295) + "px");
 
 		d3.select('.ttNaam').html(d.bedrijfsnaam)
-		d3.select('.ttWinst').html('<span>winst:</span>' + '<span>' + d.winst + '</span>')
-		d3.select('.ttOmzet').html('<span>omzet:</span>' + '<span>' + d.omzet + '</span>')
-		d3.select('.ttPercentage').html('<span>winstpercentage:</span>' + '<span>' + d.omzet + '</span>')
+		d3.select('.ttWinst').html('<span>winst:</span>' + '<span> € ' + Number(d.winst).toLocaleString() + '</span>');
+		d3.select('.ttOmzet').html('<span>omzet:</span>' + '<span> €' + Number(d.omzet).toLocaleString() + '</span>');
+		d3.select('.ttPercentage').html('<span>winstpercentage:</span>' + '<span>' + d.perc_winst + ' %</span>');
 	}
 
 	function handleMouseOut(d) {
 		tooltip.transition()
 			.duration(200)
 			.style("opacity", 0);
-	}
-
-	function checkSearch() {
-
 	}
 
 }
