@@ -138,7 +138,7 @@ function createScatterPlot(dataset) {
 			if (filterNodes.includes(d) ) {
 				return 1
 			} else {
-				return 0.2
+				return 0
 			}
 		})
 	}
@@ -158,8 +158,8 @@ function createScatterPlot(dataset) {
 			.transition()
 			.duration(200)
 			.style("opacity", 1)
-			.style("left", (d3.event.pageX - 50) + "px")
-			.style("top", (d3.event.pageY - 90) + "px");
+			.style("left", (d3.event.pageX - 220) + "px")
+			.style("top", (d3.event.pageY -295) + "px");
 
 		d3.select('.ttNaam').html(d.bedrijfsnaam)
 		d3.select('.ttWinst').html('<span>winst:</span>' + '<span>' + d.winst + '</span>')
@@ -170,7 +170,7 @@ function createScatterPlot(dataset) {
 	function handleMouseOut(d) {
 		tooltip.transition()
 			.duration(200)
-			// .style("opacity", 0);
+			.style("opacity", 0);
 	}
 
 	function checkSearch() {

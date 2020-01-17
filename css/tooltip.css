@@ -4,16 +4,81 @@
     border-radius: 15px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    opacity: 1 !important;
+    padding: 0 1em;
 }
 
 .ttOmzet, .ttWinst, .ttPercentage {
     display: flex;
     justify-content: space-between;
-    padding: 1em;
+    padding: 0.4em;
+    color: rgba(29, 41, 57, 0.5);;
 }
+.ttOmzet, .ttWinst {
+    border-bottom: dashed 1px rgba(29, 41, 57, 0.3);
+}
+
 
 .ttNaam {
     text-align: center;
     padding: 1em;
+    font-size: 20px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.2;
+    letter-spacing: normal;
+    text-align: center;
+    color: #707070;
+}
+
+.ttPercentage {
+    margin-bottom: 1.5em;
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #707070;
+    text-shadow: 0 0 20px black;
+    margin-bottom: -1.5em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 500px;
+    margin: auto;
+}
+
+.circleRed {
+    background-color: #f65645;
+}
+.circleGreen {
+    background-color: #24edad;
+}
+.circleGrey {
+    background-color: #e8e8e8;
+}
+.filterOptText {
+    color: #707070;
+    font-weight: 500;
+    font-size: 0.9em;
+    margin: auto;
+    padding-left: 0.5em;
+}
+.filterOptions {
+    justify-content: space-around;
+    grid-column: 2;
+    display: flex;
+    width: 80%;
+    margin: auto;
+    margin-top: 1em;
+}
+.filterOptions > div {
+    display: flex;
+    cursor: pointer;
 }
