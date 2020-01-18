@@ -37,3 +37,8 @@
     display: flex;
     cursor: pointer;
 }
+
+.chosen {
+    border: 1px solid #7f6ddd;
+    border-radius: 3px;
+}

@@ -4,6 +4,56 @@ import { createD3RangeSlider } from "../modules/d3RangeSlider.js";
 export function scatterPlot(data) {
 	createScatterPlot(data.j2018);
 	d3.select('#selectYear').on("change", function () {
+		let svg = d3.select('#viz-holder');
+		let circles = svg.selectAll(".circle");
+		let over10 = document.querySelector('.filterOver10');
+		let negative = document.querySelector('.filterNegative');
+		let less10 = document.querySelector('.filterUnder10');
+		document.querySelector('.filterUnder10').addEventListener('click', filterLess10);
+		document.querySelector('.filterOver10').addEventListener('click', filterOver10);
+		document.querySelector('.filterNegative').addEventListener('click', filterNegative);
+		if (document.querySelector('.chosen')) {
+			document.querySelector('.chosen').classList.remove('chosen')
+		}
+		function filterLess10() {
+			negative.classList.remove('chosen'); over10.classList.remove('chosen');
+			if (less10.classList.contains('chosen')) {
+				circles.attr("display", 'block');
+				less10.classList.remove('chosen')
+			}
+			else {
+				circles.attr("display", function (d) {
+					if (!(d.perc_winst < 10)) { return 'none'};
+					less10.classList.add('chosen');
+				});
+			}
+		}
+		function filterOver10() {
+			negative.classList.remove('chosen'); less10.classList.remove('chosen');
+			if (over10.classList.contains('chosen')) {
+				circles.attr("display", 'block');
+				over10.classList.remove('chosen')
+			}
+			else {
+				circles.attr("display", function (d) {
+					if (!(d.perc_winst >= 10)) { return 'none'};
+					over10.classList.add('chosen');
+				});
+			}
+		}
+		function filterNegative() {
+			over10.classList.remove('chosen'); less10.classList.remove('chosen');
+			if (negative.classList.contains('chosen')) {
+				circles.attr("display", 'block');
+				negative.classList.remove('chosen')
+			}
+			else {
+				circles.attr("display", function (d) {
+					if (!(d.perc_winst < 0)) { return 'none'};
+					negative.classList.add('chosen');
+				});
+			}
+		}
 		let pNode = document.getElementById('viz-holder');
 		while (pNode.firstChild) { pNode.removeChild(pNode.firstChild);}
 		let rangeField = document.getElementById('slider-container');
@@ -26,8 +76,11 @@ function createScatterPlot(dataset) {
 
 	let svg = d3.select('#viz-holder')
 		.append('svg')
+		.attr("viewBox", "0,0,150,420")
 		.attr('width', width)
-		.attr('height', height);
+		.attr('height', height)
+		.attr("x", 0)
+		.attr("y", 0);
 
 	let scale = d3.scaleLinear()
 		.domain(d3.extent(dataset, d => { return d.omzet }))
@@ -55,6 +108,7 @@ function createScatterPlot(dataset) {
 	rangeLabel.text("€ " + newRangeBegin + " - " + "€ " + newRangeEnd);
 
 	slider.onChange(function () {
+
 		let newRange = slider.range();
 
 		let newRangeBegin = Number(newRange.begin).toLocaleString();
@@ -79,7 +133,7 @@ function createScatterPlot(dataset) {
 			.merge(circles)
 			.attr("class", "circle")
 			.attr("cx", function(d) { return scale(d.omzet); })
-			.attr("cy", 30)
+			.attr("cy", 50)
 			.attr('r', function ( d ) {
 				return radiusScale(d.winst);
 			})
@@ -114,27 +168,42 @@ function createScatterPlot(dataset) {
 		.append("circle")
 		.attr("class", "circle")
 		.attr("cx", function(d) { return scale(d.omzet); })
-		.attr("cy", 30)
+		.attr("cy", 50 )
 		.attr('r', function ( d ) {
 			return radiusScale(d.winst);
 		})
 		.attr("fill", function (d) {
-			if ( (100 * d.winst / d.omzet) < 0 ) {
-				return '##E8E8E8'
-			} else if ( (100 * d.winst / d.omzet) >= 0 && (100 * d.winst / d.omzet) < 10 ) {
-				return '#24EDAD'
-			} else {
-				return '#F65545'
-			}
+			if (d.perc_winst < 0) { return '#E8E8E8'}
+			else if ( (100 * d.winst / d.omzet) >= 0 && (100 * d.winst / d.omzet) < 10 ) { return '#24EDAD' }
+			else { return '#F65545' }
 		})
 		.on("click", function(d) { handleClick(d) })
 		.on("mouseover", function(d) { handleMouseOver(d) })
-		.on("mouseout", function(d) { handleMouseOut(d) });
+		.on("mouseout", function(d) { handleMouseOut(d) })
+
+
+	let simulation = d3.forceSimulation().nodes(dataset)
+		.force("y", d3.forceY(50).strength(0.02))
+		.force('collision', d3.forceCollide().radius( d => scale(d.winst)))
+		.on('tick',ticked);
+
+	function ticked(){
+		circles.attr("cy", d => d.y);
+	}
+
+	svg.call(d3.zoom().on('zoom', function() {
+		circles.attr('transform', d3.event.transform);
+		d3.select('.test').attr('transform', d3.event.transform);
+	}));
+
+
 
 	let counter = d3.select('.amountContainer')
-		.text(function () {
-			return dataset.length;
-		});
+		.text(function () { return dataset.length });
+
+	let over10 = document.querySelector('.filterOver10');
+	let negative = document.querySelector('.filterNegative');
+	let less10 = document.querySelector('.filterUnder10');
 
 	function searchFunction(e) {
 		let filterNodes = dataset.filter(zorgbedrijf => zorgbedrijf.bedrijfsnaam.toLowerCase().includes(e.target.value.toLowerCase()));
@@ -142,22 +211,43 @@ function createScatterPlot(dataset) {
 	}
 
 	function filterLess10() {
-		circles.attr("display", function (d) { if (!(d.perc_winst < 10)) { return 'none'}});
-		document.querySelector('.filterOver10').style.border = '0px';
-		document.querySelector('.filterNegative').style.border = '0px';
-		document.querySelector('.filterUnder10').style.border = '2px solid #7f6ddd'
+		negative.classList.remove('chosen'); over10.classList.remove('chosen');
+		if (less10.classList.contains('chosen')) {
+			circles.attr("display", 'block');
+			less10.classList.remove('chosen')
+		}
+		else {
+			circles.attr("display", function (d) {
+				if (!(d.perc_winst < 10)) { return 'none'};
+				less10.classList.add('chosen');
+			});
+		}
 	}
 	function filterOver10() {
-		circles.attr("display", function (d) { if (!(d.perc_winst >= 10)) { return 'none'}});
-		document.querySelector('.filterUnder10').style.border = '0px';
-		document.querySelector('.filterNegative').style.border = '0px';
-		document.querySelector('.filterOver10').style.border = '2px solid #7f6ddd'
+		negative.classList.remove('chosen'); less10.classList.remove('chosen');
+		if (over10.classList.contains('chosen')) {
+			circles.attr("display", 'block');
+			over10.classList.remove('chosen')
+		}
+		else {
+			circles.attr("display", function (d) {
+				if (!(d.perc_winst >= 10)) { return 'none'};
+				over10.classList.add('chosen');
+			});
+		}
 	}
 	function filterNegative() {
-		circles.attr("display", function (d) { if (!(d.perc_winst < 0)) { return 'none'}});
-		document.querySelector('.filterOver10').style.border = '0px';
-		document.querySelector('.filterOver10').style.border = '0px';
-		document.querySelector('.filterNegative').style.border = '2px solid #7f6ddd'
+		over10.classList.remove('chosen'); less10.classList.remove('chosen');
+		if (negative.classList.contains('chosen')) {
+			circles.attr("display", 'block');
+			negative.classList.remove('chosen')
+		}
+		else {
+			circles.attr("display", function (d) {
+				if (!(d.perc_winst < 0)) { return 'none'};
+				negative.classList.add('chosen');
+			});
+		}
 	}
 
 
@@ -177,14 +267,13 @@ function createScatterPlot(dataset) {
 			.style("opacity", 1)
 			.style("left", (d3.event.pageX - 220) + "px")
 			.style("top", (d3.event.pageY -295) + "px");
-
 		d3.select('.ttNaam').html(d.bedrijfsnaam)
 		d3.select('.ttWinst').html('<span>winst:</span>' + '<span> € ' + Number(d.winst).toLocaleString() + '</span>');
 		d3.select('.ttOmzet').html('<span>omzet:</span>' + '<span> €' + Number(d.omzet).toLocaleString() + '</span>');
 		d3.select('.ttPercentage').html('<span>winstpercentage:</span>' + '<span>' + d.perc_winst + ' %</span>');
 	}
 
-	function handleMouseOut(d) {
+	function handleMouseOut() {
 		tooltip.transition()
 			.duration(200)
 			.style("opacity", 0);
