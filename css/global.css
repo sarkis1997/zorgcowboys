@@ -39,6 +39,11 @@ path {
 #viz-holder svg {
     display: block;
     margin: 0 auto;
+    cursor: grab;
+}
+
+#viz-holder svg:active {
+    cursor: grabbing;
 }
 .titleSection {
     display: flex;

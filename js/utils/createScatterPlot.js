@@ -76,11 +76,8 @@ function createScatterPlot(dataset) {
 
 	let svg = d3.select('#viz-holder')
 		.append('svg')
-		.attr("viewBox", "0,0,150,420")
 		.attr('width', width)
 		.attr('height', height)
-		.attr("x", 0)
-		.attr("y", 0);
 
 	let scale = d3.scaleLinear()
 		.domain(d3.extent(dataset, d => { return d.omzet }))
@@ -151,6 +148,27 @@ function createScatterPlot(dataset) {
 			.text(function () {
 				return dataset.length;
 			})
+
+		let simulation = d3.forceSimulation().nodes(dataset)
+			.force("y", d3.forceY(40).strength(0.5))
+			.force('collision', d3.forceCollide().radius( d => scale(d.winst)))
+			.velocityDecay(1)
+			.on('tick',ticked);
+		function ticked(){ circles.attr("cy", d => d.y); }
+		let zoom = svg.call(d3.zoom().on('zoom', function() {
+			circles.attr('transform', d3.event.transform);
+			d3.select('.test').attr('transform', d3.event.transform);
+		}));
+
+		d3.select('#zoom-in').on('click', function() {
+			// Smooth zooming
+			zoom.scaleBy(svg.transition().duration(750), 1.3);
+		});
+
+		d3.select('#zoom-out').on('click', function() {
+			// Ordinal zooming
+			zoom.scaleBy(svg, 1 / 1.3);
+		});
 	});
 
 
@@ -160,7 +178,7 @@ function createScatterPlot(dataset) {
 			d3.max( dataset, function ( d ) { return d.winst })
 		] )
 		// hier pas je de grootte van de bolletjes aan
-		.range( [ 1, 30] );
+		.range( [ 0.1, 10] );
 
 	let circles = svg.selectAll(".circle")
 		.data(dataset)
@@ -183,15 +201,12 @@ function createScatterPlot(dataset) {
 
 
 	let simulation = d3.forceSimulation().nodes(dataset)
-		.force("y", d3.forceY(50).strength(0.02))
-		.force('collision', d3.forceCollide().radius( d => scale(d.winst)))
+		.force("y", d3.forceY(40).strength(0.5))
+		.velocityDecay(1)
+		.force('collision', d3.forceCollide().radius( d => scale(d.winst) + 10))
 		.on('tick',ticked);
-
-	function ticked(){
-		circles.attr("cy", d => d.y);
-	}
-
-	svg.call(d3.zoom().on('zoom', function() {
+	function ticked(){ circles.attr("cy", d => d.y); }
+	let zoom = svg.call(d3.zoom().on('zoom', function() {
 		circles.attr('transform', d3.event.transform);
 		d3.select('.test').attr('transform', d3.event.transform);
 	}));
@@ -278,5 +293,4 @@ function createScatterPlot(dataset) {
 			.duration(200)
 			.style("opacity", 0);
 	}
-
 }
