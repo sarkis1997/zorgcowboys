@@ -87,7 +87,7 @@ function createScatterPlot(dataset) {
 		.scale(scale);
 
 	svg.append("g")
-		.attr('class', 'test')
+		.attr('class', 'nodeGroup')
 		.call(xAxis);
 
 	let tooltip = d3.select(".tooltip");
@@ -118,67 +118,19 @@ function createScatterPlot(dataset) {
 			.domain([newRange.begin, newRange.end])
 			.range([0 + 30, width * .96]);
 
-		let xAxis = d3.axisBottom()
-			.scale(scale);
+		let xAxis = d3.axisBottom().scale(scale);
+		d3.select('.nodeGroup').call(xAxis);
 
-		d3.select('.test')
-			.call(xAxis);
-
-		circles
-			.exit().remove()
-			.enter().append("circle")
-			.merge(circles)
-			.attr("class", "circle")
-			.attr("cx", function(d) { return scale(d.omzet); })
-			.attr("cy", 50)
-			.attr('r', function ( d ) {
-				return radiusScale(d.winst);
-			})
-			.attr("fill", function (d) {
-				if ( (100 * d.winst / d.omzet) < 0 ) {
-					return '#dcdcdc'
-				} else if ( (100 * d.winst / d.omzet) >= 0 && (100 * d.winst / d.omzet) < 10 ) {
-					return '#71e9b3'
-				} else {
-					return '#e5604e'
-				}
-			});
-
-		counter
-			.text(function () {
-				return dataset.length;
-			})
-
-		let simulation = d3.forceSimulation().nodes(dataset)
-			.force("y", d3.forceY(40).strength(0.5))
-			.force('collision', d3.forceCollide().radius( d => scale(d.winst)))
-			.velocityDecay(1)
-			.on('tick',ticked);
-		function ticked(){ circles.attr("cy", d => d.y); }
-		let zoom = svg.call(d3.zoom().on('zoom', function() {
-			circles.attr('transform', d3.event.transform);
-			d3.select('.test').attr('transform', d3.event.transform);
-		}));
-
-		d3.select('#zoom-in').on('click', function() {
-			// Smooth zooming
-			zoom.scaleBy(svg.transition().duration(750), 1.3);
-		});
-
-		d3.select('#zoom-out').on('click', function() {
-			// Ordinal zooming
-			zoom.scaleBy(svg, 1 / 1.3);
-		});
+		circles.attr("cx", function(d) { return scale(d.omzet) });
+		counter.text(function () { return dataset.length });
 	});
 
 
 	let radiusScale = d3.scaleLinear()
-		.domain( [
-			d3.min(dataset, function ( d ) { return d.winst}),
-			d3.max( dataset, function ( d ) { return d.winst })
-		] )
-		// hier pas je de grootte van de bolletjes aan
-		.range( [ 0.1, 10] );
+		.domain( [ d3.min(dataset, function ( d ) { return d.winst}),
+			d3.max( dataset, function ( d ) { return d.winst })] )
+		.range( [ 0.1, 8] );	 // hier pas je de grootte van de bolletjes aan
+
 
 	let circles = svg.selectAll(".circle")
 		.data(dataset)
@@ -208,7 +160,7 @@ function createScatterPlot(dataset) {
 	function ticked(){ circles.attr("cy", d => d.y); }
 	let zoom = svg.call(d3.zoom().on('zoom', function() {
 		circles.attr('transform', d3.event.transform);
-		d3.select('.test').attr('transform', d3.event.transform);
+		d3.select('.nodeGroup').attr('transform', d3.event.transform);
 	}));
 
 
@@ -277,11 +229,11 @@ function createScatterPlot(dataset) {
 
 	function handleMouseOver(d) {
 		tooltip
-			.transition()
-			.duration(200)
+			// .transition()
+			// .duration(200)
 			.style("opacity", 1)
-			.style("left", (d3.event.pageX - 220) + "px")
-			.style("top", (d3.event.pageY -295) + "px");
+			.style("left", (d3.event.pageX - 200) + "px")
+			.style("top", (d3.event.pageY -265) + "px");
 		d3.select('.ttNaam').html(d.bedrijfsnaam)
 		d3.select('.ttWinst').html('<span>winst:</span>' + '<span> € ' + Number(d.winst).toLocaleString() + '</span>');
 		d3.select('.ttOmzet').html('<span>omzet:</span>' + '<span> €' + Number(d.omzet).toLocaleString() + '</span>');
@@ -289,8 +241,9 @@ function createScatterPlot(dataset) {
 	}
 
 	function handleMouseOut() {
-		tooltip.transition()
-			.duration(200)
+		tooltip
+			// .transition()
+			// .duration(200)
 			.style("opacity", 0);
 	}
 }

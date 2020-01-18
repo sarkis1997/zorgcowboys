@@ -1,8 +1,15 @@
 .searchContainer {
     display: flex;
     width: 20em;
+    z-index: 99999;
 }
+.toggleSwitchOn {
+    z-index: 99999;
 
+}
+#selectYear {
+    z-index: 99999;
+}
 .searchIcon {
     width: 1em;
     height: auto;

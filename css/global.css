@@ -16,6 +16,7 @@ body {
 
 #framework {
     margin-top: 2em;
+    z-index: 999;
 }
 
 #app {
@@ -39,7 +40,6 @@ path {
 #viz-holder svg {
     display: block;
     margin: 0 auto;
-    cursor: grab;
 }
 
 #viz-holder svg:active {
