@@ -1,1 +1,26 @@
-.searchContainer{display:flex;width:20em;z-index:99999}.toggleSwitchOn{z-index:99999}#selectYear{z-index:99999}.searchIcon{width:1em;height:auto;margin-right:-1.5em;z-index:99}#searchInput{padding-left:2.5em;font-size:.8em;width:20em;border:1px solid #8567e4;border-radius:20em}
+.searchContainer {
+    display: flex;
+    width: 20em;
+    z-index: 99999;
+}
+.toggleSwitchOn {
+    z-index: 99999;
+
+}
+#selectYear {
+    z-index: 99999;
+}
+.searchIcon {
+    width: 1em;
+    height: auto;
+    margin-right: -1.5em;
+    z-index: 99;
+}
+
+#searchInput {
+    padding-left: 2.5em;
+    font-size: 0.8em;
+    width: 20em;
+    border: 1px solid #8567e4;
+    border-radius: 20em;
+}
