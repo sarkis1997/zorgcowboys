@@ -222,7 +222,7 @@ function createScatterPlot(dataset) {
 
 	function searchFunction(e) {
 		let filterNodes = dataset.filter(zorgbedrijf => zorgbedrijf.bedrijfsnaam.toLowerCase().includes(e.target.value.toLowerCase()));
-		circles.attr("opacity", function (d) { if (!filterNodes.includes(d)) {return 0} })
+		circles.attr("display", function (d) { if (!filterNodes.includes(d)) {return 'none'} })
 	}
 
 	function filterLess10() {
