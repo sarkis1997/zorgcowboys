@@ -39,5 +39,18 @@ d3.json("datasets/dataset.json")
 
 
 export function startApp(data) {
-	scatterPlot(data);
+
+	scatterPlot(data)
+
+	document.querySelector('.toggle').addEventListener('click', function () {
+		if( document.querySelector('.toggle').classList.contains('toggleSwitchOn') ) {
+			let app = document.querySelector('#viz-holder');
+			while (app.firstChild) { app.removeChild(app.firstChild); }
+			let slider = document.querySelector('#slider-container');
+			while (slider.firstChild) { slider.removeChild(slider.firstChild); }
+		} else if ( document.querySelector('.toggle').classList.contains('toggleSwitchOff') ) {
+			scatterPlot(data)
+
+		}
+	})
 }

@@ -90,7 +90,7 @@ function createScatterPlot(dataset) {
 	let radiusScale = d3.scaleLinear()
 		.domain( [ d3.min(dataset, function ( d ) { return d.winst}),
 			d3.max( dataset, function ( d ) { return d.winst })] )
-		.range( [ 0.1, 8] );	 // hier pas je de grootte van de bolletjes aan
+		.range( [ 0.1, 5] );	 // hier pas je de grootte van de bolletjes aan
 
 
 	let circles = svg.selectAll(".circle")
