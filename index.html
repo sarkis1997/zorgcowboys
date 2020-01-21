@@ -41,15 +41,13 @@
                 </select>
             </div>
             <div class="filterSection">
-                <!--            https://gitbrent.github.io/bootstrap4-toggle/               -->
-                <input id="weergave"
-                       type="checkbox"
-                       checked data-toggle="toggle"
-                       data-on="Alle zorgsectoren"
-                       data-off="Weergave per zorgsector"
-                       data-style="ios"
-                       data-onstyle="outline-primary toggleSwitchOn"
-                       data-offstyle="outline-secondary toggleSwitchOff">
+                <div class="switchBtn">
+                    <input id="toggle-on" class="toggle toggle-left" name="toggle" value="false" type="radio" checked>
+                    <label for="toggle-on" class="btn">Alle zorgsectoren</label>
+                    <input id="toggle-off" class="toggle toggle-right" name="toggle" value="true" type="radio">
+                    <label for="toggle-off" class="btn">Weergave per zorgsector</label>
+                </div>
+
                 <div class="searchContainer">
                     <img class="searchIcon" src="./media/searchicon.svg" alt="">
                     <input type="text" id="searchInput" placeholder="Zoek een zorginstelling">
@@ -60,24 +58,27 @@
         <div id="app">
             <div id="countZorgBedrijven">
                 <div class="amountContainer"></div>
-                <span>Zorginstellingen</span>
+                <span>zorginstellingen</span>
             </div>
             <div id="viz-holder"></div>
+            <div id="viz-holder1"></div>
+            <div id="viz-holder2"></div>
+            <div id="viz-holder3"></div>
             <div id="slideFilter">
                 <div id="slider-container"></div>
                 <div id="range-label"></div>
             </div>
             <div class="filterOptions">
                 <div class="filterUnder10 filterOpt">
-                    <div class="circle circleGreen"></div>
+                    <div class="circle groen"><img id="circleGr" src="./media/icons/groen.svg" alt=""></div>
                     <div class="filterOptText">Winstpercentage < 10%</div>
                 </div>
                 <div class="filterOver10 filterOpt">
-                    <div class="circle circleRed"></div>
+                    <div class="circle rood"><img id="circleRe" src="./media/icons/rood.svg" alt=""></div>
                     <div class="filterOptText">Winstpercentage > 10%</div>
                 </div>
                 <div class="filterNegative filterOpt">
-                    <div class="circle circleGrey"></div>
+                    <div class="circle grijs"><img id="circleGry "src="./media/icons/grijs.svg" alt=""></div>
                     <div class="filterOptText">Negatief winstpercentage</div>
                 </div>
             </div>

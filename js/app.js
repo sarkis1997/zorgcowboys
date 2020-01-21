@@ -1,4 +1,5 @@
 import { scatterPlot } from "./utils/createScatterPlot.js";
+import { scatterPlotPer } from "./utils/createScatterPlotPer.js";
 
 d3.json("datasets/dataset.json")
 	.then(function (data) {
@@ -39,18 +40,24 @@ d3.json("datasets/dataset.json")
 
 
 export function startApp(data) {
-
-	scatterPlot(data)
-
-	document.querySelector('.toggle').addEventListener('click', function () {
-		if( document.querySelector('.toggle').classList.contains('toggleSwitchOn') ) {
+	scatterPlot(data);
+	document.querySelector('#toggle-off').addEventListener('click', function () {
+		let app = document.querySelector('#viz-holder');
+		while (app.firstChild) {
+			app.removeChild(app.firstChild);
+		}
+		let slider = document.querySelector('#slider-container');
+		while (slider.firstChild) {
+			slider.removeChild(slider.firstChild);
+		}
+		console.log('per zorgsector')
+		scatterPlotPer(data)
+	});
+	document.querySelector('#toggle-on').addEventListener('click', function () {
 			let app = document.querySelector('#viz-holder');
 			while (app.firstChild) { app.removeChild(app.firstChild); }
 			let slider = document.querySelector('#slider-container');
 			while (slider.firstChild) { slider.removeChild(slider.firstChild); }
-		} else if ( document.querySelector('.toggle').classList.contains('toggleSwitchOff') ) {
 			scatterPlot(data)
-
-		}
-	})
+		})
 }

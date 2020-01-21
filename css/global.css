@@ -1,10 +1,16 @@
-/*
---------------------- AANZETTEN ZODRA IK KLAAR BEN CODEREN --------------
-#framework {
-    display: none;
+@font-face {
+    font-family: 'ZillaSlab';
+    src:  url('../fonts/ZillaSlab-Medium.ttf');
+    src:  url('../fonts/ZillaSlab-Bold.ttf');
+    src:  url('../fonts/ZillaSlab-Bolditalic.ttf');
+    src:  url('../fonts/ZillaSlab-Light.ttf');
+    src:  url('../fonts/ZillaSlab-SemiBold.ttf');
+    src:  url('../fonts/ZillaSlab-Medium.ttf');
 }
-*/
 
+body {
+    font-family: 'ZillaSlab', Fallback, sans-serif;
+}
 body {
     position: fixed;
     left: 0;
@@ -12,6 +18,8 @@ body {
     top: 0;
     bottom: 0;
     margin: 0;
+    font-family: 'ZillaSlab', Fallback, sans-serif;
+
 }
 
 #framework {
@@ -92,4 +100,22 @@ path {
 
 .tooltip {
     cursor: pointer;
+}
+
+#countZorgBedrijven {
+    margin: auto;
+}
+.amountContainer {
+    font-size: 60px;
+}
+.amountContainer span {
+    font-size: 20px;
+}
+
+#searchInput {
+    background-color: #f2f2f2
+}
+
+g text, g line {
+    color: rgba(29, 40, 57, 0.5);
 }
