@@ -18,7 +18,7 @@ Met deze datavisualisatie willen wij de zorgsectoren die vermoedelijk frauderen 
 * Live zoekfunctie
 * Weergave aantal zorginstellingen per jaar
 * Hover per zorgintelling
-* Klik per zorginstelling (IN ONTWIKKELING)
+* Klik per zorginstelling --> Andere datavisualisaties in sidebar (IN ONTWIKKELING)
 * Klikbare legenda filter
 * Range Slider
 * Verschuifbare kaart (draggable)
