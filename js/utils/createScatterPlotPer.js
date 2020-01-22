@@ -29,7 +29,6 @@ export function scatterPlotPer(data) {
 						return 'none'
 					};
 					less10.classList.add('chosen');
-					document.getElementById('circleGr').src('../../media/icons/rood.svg')
 				})
 			}
 		}
