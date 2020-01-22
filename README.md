@@ -21,6 +21,8 @@ Met deze datavisualisatie willen wij de zorgsectoren die vermoedelijk frauderen 
 * Klik per zorginstelling (IN ONTWIKKELING)
 * Klikbare legenda filter
 * Range Slider
+* Verschuifbare kaart (draggable)
+* Zoombare kaart (zoomable)
 
 ## Bugs
 * Wisselen naar 'per zorgsector' weergave werkt nog niet
